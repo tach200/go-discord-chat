@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "proto/proto";
+
+package discordmessages;
+
+service DiscordMessage {
+    rpc SendChanMessage (MessageChannel) returns (ServerResponse) {}
+}
+
+message MessageChannel {
+    string subject = 1;
+    string content = 2;
+}
+
+message ServerResponse {
+    string message = 1;
+}
