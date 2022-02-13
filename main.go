@@ -8,6 +8,8 @@ import (
 	"os/signal"
 	"syscall"
 
+	pb "github.com/tach200/go-discord-chat/proto"
+
 	"google.golang.org/grpc"
 
 	"github.com/bwmarrin/discordgo"
@@ -19,7 +21,7 @@ var (
 )
 
 func init() {
-	flag.StringVar(&Token, "t", "OTQyMTExNzA4MDkxMTQyMjE0.Ygfv5g.cDfXPAOSUHFcugfSGXvzV6uCcWA", "Bot Token")
+	flag.StringVar(&Token, "t", "", "Bot Token")
 	flag.StringVar(&ChannelID, "c", "942196758115659817", "Channel ID")
 
 	flag.Parse()
