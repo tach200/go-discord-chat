@@ -8,10 +8,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	pb "github.com/tach200/go-discord-chat/proto"
-
 	"google.golang.org/grpc"
 
+	"github.com/achmang/go-discord-chat/handlers"
+	pb "github.com/achmang/go-discord-chat/proto"
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -31,8 +31,9 @@ func main() {
 	// Create the Discord Session
 	discord, err := discordgo.New("Bot " + Token)
 	if err != nil {
-		log.Printf("could not create new discord session: %v", err)
+		log.Fatalf("could not create new discord session: %v", err)
 	}
+	log.Println("Discord session created")
 
 	//Start gRPC server
 	// TODO set flag here for port
@@ -42,8 +43,15 @@ func main() {
 	}
 
 	grpcServer := grpc.NewServer()
-	pb.RegisterDiscordMessageServer()
-	grpcServer.Serve(lis)
+	pb.RegisterDiscordMessageServer(grpcServer, &handlers.DiscordBotServer{
+		UnimplementedDiscordMessageServer: pb.UnimplementedDiscordMessageServer{},
+		Session:                           discord,
+		ChannelID:                         ChannelID,
+	})
+	err = grpcServer.Serve(lis)
+	if err != nil {
+		log.Fatalf("grpc sever couldnt sevre %v", err)
+	}
 
 	// Shut the server down properly
 	sc := make(chan os.Signal, 1)
@@ -52,14 +60,4 @@ func main() {
 
 	// Cleanly close down the Discord session.
 	discord.Close()
-}
-
-// messageChannel sends a message to with the given payload to a specified channel
-func messageChannel(s *discordgo.Session, channelID, msgPayload string) error {
-	_, err := s.ChannelMessageSend(ChannelID, msgPayload)
-	if err != nil {
-		return err
-	}
-
-	return nil
 }

@@ -1,4 +1,4 @@
-module github.com/achmang/discord-chat-bot
+module github.com/achmang/go-discord-chat
 
 go 1.17
 
