@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"fmt"
 
 	pb "github.com/achmang/go-discord-chat/proto"
 	"github.com/bwmarrin/discordgo"
@@ -15,9 +16,9 @@ type DiscordBotServer struct {
 
 func (s *DiscordBotServer) SendChanMessage(ctx context.Context, payload *pb.MessageChannel) (*pb.ServerResponse, error) {
 
-	// msg := fmt.Sprintf("Subject : %v %v", payload.Subject, payload.Content)
+	msg := fmt.Sprintf("Subject : %v \n %v", payload.Subject, payload.Content)
 
-	err := messageChannel(s.Session, s.ChannelID, "hi")
+	err := messageChannel(s.Session, s.ChannelID, msg)
 	if err != nil {
 		return &pb.ServerResponse{
 			Message: "Send FAILED",
