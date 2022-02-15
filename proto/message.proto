@@ -1,11 +1,16 @@
 syntax = "proto3";
-
 option go_package = "proto/proto";
-
 package proto;
 
+import "google/api/annotations.proto";
+
 service DiscordMessage {
-    rpc SendChanMessage(MessageChannel) returns (ServerResponse) {}
+    rpc SendChanMessage(MessageChannel) returns (ServerResponse) {
+        option (google.api.http) = {
+            post: "/sendchanmessage"
+            body : "*"
+        };
+    }
 }
 
 message MessageChannel {

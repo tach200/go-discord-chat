@@ -1,9 +1,11 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"log"
 	"net"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -13,6 +15,7 @@ import (
 	"github.com/achmang/go-discord-chat/handlers"
 	pb "github.com/achmang/go-discord-chat/proto"
 	"github.com/bwmarrin/discordgo"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 )
 
 var (
@@ -21,7 +24,7 @@ var (
 )
 
 func init() {
-	flag.StringVar(&Token, "t", "", "Bot Token")
+	flag.StringVar(&Token, "t", "OTQyMTExNzA4MDkxMTQyMjE0.Ygfv5g.AQaNCFN--Xv4_pUU7avJ7Nn44Jk", "Bot Token")
 	flag.StringVar(&ChannelID, "c", "942196758115659817", "Channel ID")
 
 	flag.Parse()
@@ -34,6 +37,19 @@ func main() {
 		log.Fatalf("could not create new discord session: %v", err)
 	}
 	log.Println("Discord session created")
+
+	go func() {
+		// mux
+		mux := runtime.NewServeMux()
+		// register
+		pb.RegisterDiscordMessageHandlerServer(context.Background(), mux, &handlers.DiscordBotServer{
+			UnimplementedDiscordMessageServer: pb.UnimplementedDiscordMessageServer{},
+			Session:                           discord,
+			ChannelID:                         ChannelID,
+		})
+		// launch http
+		http.ListenAndServe("localhost:1133", mux)
+	}()
 
 	//Start gRPC server
 	// TODO set flag here for port

@@ -19,8 +19,8 @@ func main() {
 	client := pb.NewDiscordMessageClient(conn)
 
 	resp, err := client.SendChanMessage(context.Background(), &pb.MessageChannel{
-		Subject: "Test",
-		Content: "Test",
+		Subject: "Test Subject",
+		Content: "Some String Content goes here",
 	})
 	if err != nil {
 		log.Fatalf("send channel message error : %v", err)
