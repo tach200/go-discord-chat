@@ -24,7 +24,7 @@ var (
 )
 
 func init() {
-	flag.StringVar(&Token, "t", "OTQyMTExNzA4MDkxMTQyMjE0.Ygfv5g.AQaNCFN--Xv4_pUU7avJ7Nn44Jk", "Bot Token")
+	flag.StringVar(&Token, "t", "", "Bot Token")
 	flag.StringVar(&ChannelID, "c", "942196758115659817", "Channel ID")
 
 	flag.Parse()
