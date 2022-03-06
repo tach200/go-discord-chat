@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discord-bot
+  labels:
+    app: discord-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discord-bot
+  template:
+    metadata:
+      labels:
+        app: discord-bot
+    spec:
+      containers:
+      - name: discord-bot
+        image: ghcr.io/tach200/discord-bot:main
+        ports:
+        - containerPort: 1122
+        volumeMounts:
+          - name: secret
+            mountpath: /configs/secrets
+          - name: env
+            mountpath: /configs
+  volumes:
+    - name: env
+      configMap:
+        name: theory-scanner-config
+    - name: secret
+      secret:
+        secretName: discord-bot-token

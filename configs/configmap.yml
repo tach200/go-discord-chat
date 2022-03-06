@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: theory-scanner-config
+data:
+  env.yml: |
+    channelID: "942196758115659817"
+    grpcPort: "1122"
+    restPort: "1133"
