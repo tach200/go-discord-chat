@@ -1,6 +1,7 @@
 # discord-chat-bot
- 
-generic discord chat bot.
-runs a grpc server so external programs can communicate and send messages as they like.
 
-now with grpc gateway so can use rest also
+Add discord notifications to your Kubernetes deployment.
+
+This discord chat bot deploys a pod in your kubernetes cluster.
+The pod will listen for any internal REST or gRPC requests, which will include a message payload.
+This messsage payload will be sent to the desired discord channel, making it easy to add discord notifications to your cluster.
