@@ -4,6 +4,6 @@ metadata:
   name: theory-scanner-config
 data:
   env.yml: |
-    channelID: "942196758115659817"
+    channelID: "<add channel id here in quotations>"
     grpcPort: "1122"
     restPort: "1133"
