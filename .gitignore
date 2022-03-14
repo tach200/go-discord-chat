@@ -1,1 +1,2 @@
-go-discord-chat/configs/secret.yml
+# Ignore secrets
+/configs/secret.yml
