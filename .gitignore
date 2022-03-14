@@ -1,2 +1,2 @@
 # Ignore secrets
-/configs/secret.yml
+configs/secret.yaml
