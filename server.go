@@ -45,7 +45,7 @@ func restServer(discord *discordgo.Session, port string) {
 // grpcServer starts the grpc server to listen for incoming messages,
 // pass in a discrod session so that incoming message can be sent to discord channel.
 func grpcServer(discord *discordgo.Session, port string) {
-	addr := fmt.Sprintf("localhost:%s", port)
+	addr := fmt.Sprintf(":%s", port)
 
 	lis, err := net.Listen("tcp", addr)
 	if err != nil {
@@ -66,21 +66,29 @@ func grpcServer(discord *discordgo.Session, port string) {
 
 func init() {
 	viper.SetConfigName("env")
-	viper.AddConfigPath("/configs/")
-	viper.AddConfigPath("/configs/secrets")
-	viper.AddConfigPath("$HOME/.configs")
+	viper.AddConfigPath("/conf/")
+	viper.AddConfigPath("$HOME/.conf")
 	viper.AddConfigPath(".")
-	viper.SetConfigFile("yml")
 
 	err := viper.ReadInConfig()
 	if err != nil {
 		log.Fatalf("error: couldn't read config file: %s", err)
 	}
 
-	flag.StringVar(&Token, "t", viper.GetString("token"), "Bot Token")
+	viper.SetConfigName("secret")
+	viper.AddConfigPath("/conf/secrets")
+	viper.AddConfigPath("$HOME/.conf/secrets")
+	viper.AddConfigPath(".")
+
+	err = viper.MergeInConfig()
+	if err != nil {
+		log.Fatalf("error: couldn't merge config file: %s", err)
+	}
+
 	flag.StringVar(&ChannelID, "c", viper.GetString("channelID"), "Channel ID")
 	flag.StringVar(&GrpcPort, "gp", viper.GetString("grpcPort"), "gRPC Port")
 	flag.StringVar(&RestPort, "rp", viper.GetString("restPort"), "REST Port")
+	flag.StringVar(&Token, "t", viper.GetString("botToken"), "Bot Token")
 
 	flag.Parse()
 }

@@ -21,13 +21,13 @@ spec:
         - containerPort: 1122
         volumeMounts:
           - name: secret
-            mountpath: /configs/secrets
+            mountPath: /conf/secrets
           - name: env
-            mountpath: /configs
-  volumes:
-    - name: env
-      configMap:
-        name: theory-scanner-config
-    - name: secret
-      secret:
-        secretName: discord-bot-token
+            mountPath: /conf/
+      volumes:
+        - name: env
+          configMap:
+            name: theory-scanner-config
+        - name: secret
+          secret:
+            secretName: discord-bot-token
