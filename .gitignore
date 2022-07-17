@@ -1,3 +1,5 @@
 # Ignore secrets
 configs/secret.yaml
 configs/configmap.yaml
+env.env
+secret.env
