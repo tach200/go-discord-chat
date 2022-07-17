@@ -11,4 +11,4 @@ protogen:
 
 # curl -X POST -H "Content-Type: application/json" \
 #     -d '{"subject": "test", "content": "http request"}' \
-#     http://localhost:1133/sendchanmessage
+#     http://localhost:3333/sendchanmessage
