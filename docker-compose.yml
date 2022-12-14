@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  discord-chat:
+    image: go-discord-chat
+    ports:
+      - "4444:4444"
+
+  discord-notify:
+    image: go-ping-discord
+    depends_on:
+      discord-chat:
+        condition: service_started

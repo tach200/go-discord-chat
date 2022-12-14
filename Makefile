@@ -7,8 +7,3 @@ protogen:
       --grpc-gateway_opt paths=source_relative \
       --grpc-gateway_opt generate_unbound_methods=true \
     proto/message.proto
-
-
-# curl -X POST -H "Content-Type: application/json" \
-#     -d '{"subject": "test", "content": "http request"}' \
-#     http://localhost:3333/sendchanmessage

@@ -1,0 +1,5 @@
+Test REST, instead of gRPC you can use the following command.
+
+curl -X POST -H "Content-Type: application/json" \
+-d '{"subject": "test", "content": "http request"}' \
+http://localhost:3333/sendchanmessage
